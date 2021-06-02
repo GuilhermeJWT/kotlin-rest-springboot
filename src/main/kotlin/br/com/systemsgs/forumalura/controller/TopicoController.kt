@@ -1,11 +1,9 @@
 package br.com.systemsgs.forumalura.controller
 
+import br.com.systemsgs.forumalura.dto.ModelTopicoDTO
 import br.com.systemsgs.forumalura.model.ModelTopico
 import br.com.systemsgs.forumalura.service.TopicoService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -20,6 +18,11 @@ class TopicoController(private val topicoService: TopicoService) {
     @GetMapping("/buscar/{id}")
     fun buscarPorId(@PathVariable id: Long): ModelTopico{
         return topicoService.buscarPorId(id)
+    }
+
+    @PostMapping("/salvar")
+    fun cadastrar(@RequestBody topicoDTO: ModelTopicoDTO){
+        topicoService.cadastrar(topicoDTO)
     }
 
 }
