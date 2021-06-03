@@ -1,5 +1,6 @@
 package br.com.systemsgs.forumalura.service
 
+import br.com.systemsgs.forumalura.dto.AtualizaTopicoDTO
 import br.com.systemsgs.forumalura.dto.ModelTopicoDTO
 import br.com.systemsgs.forumalura.dto.TopicoResponseDTO
 import br.com.systemsgs.forumalura.mapper.TopicoConverterFormMapper
@@ -29,6 +30,21 @@ class TopicoService(
         val topico = converterTopicoConverterMapper.map(topicoDTO)
         topico.id = topicos.size.toLong() +1
         topicos = topicos.plus(topico)
+    }
+
+    fun atualizar(topicoDTO: AtualizaTopicoDTO) {
+        val topico =  topicos.stream().filter({t -> t.id == topicoDTO.id}).findFirst().get()
+        topicos = topicos.minus(topico).plus(
+            ModelTopico(
+            id = topicoDTO.id,
+            titulo = topicoDTO.titulo,
+            mensagem = topicoDTO.mensagem,
+            autor = topico.autor,
+            curso = topico.curso,
+            respostas = topico.respostas,
+            status = topico.status,
+            dataCriacao = topico.dataCriacao
+        ))
     }
 
 }

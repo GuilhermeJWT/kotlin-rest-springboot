@@ -1,8 +1,8 @@
 package br.com.systemsgs.forumalura.controller
 
+import br.com.systemsgs.forumalura.dto.AtualizaTopicoDTO
 import br.com.systemsgs.forumalura.dto.TopicoResponseDTO
 import br.com.systemsgs.forumalura.dto.ModelTopicoDTO
-import br.com.systemsgs.forumalura.model.ModelTopico
 import br.com.systemsgs.forumalura.service.TopicoService
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -24,6 +24,11 @@ class TopicoController(private val topicoService: TopicoService) {
     @PostMapping("/salvar")
     fun cadastrar(@RequestBody @Valid topicoDTO: ModelTopicoDTO){
         topicoService.cadastrar(topicoDTO)
+    }
+
+    @PutMapping("/editar")
+    fun atualizar(@RequestBody @Valid topicoDTO: AtualizaTopicoDTO){
+        topicoService.atualizar(topicoDTO)
     }
 
 }
