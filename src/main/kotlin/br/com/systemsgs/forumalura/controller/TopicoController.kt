@@ -11,8 +11,13 @@ import javax.validation.Valid
 @RequestMapping("/topicos")
 class TopicoController(private val topicoService: TopicoService) {
 
+    @PostMapping("/salvar")
+    fun cadastrarTopico(@RequestBody @Valid topicoDTO: ModelTopicoDTO){
+        topicoService.cadastrar(topicoDTO)
+    }
+
     @GetMapping("/listar")
-    fun listar(): List<TopicoResponseDTO>{
+    fun listaTodosTopicos(): List<TopicoResponseDTO>{
         return topicoService.listar()
     }
 
@@ -21,14 +26,14 @@ class TopicoController(private val topicoService: TopicoService) {
         return topicoService.buscarPorId(id)
     }
 
-    @PostMapping("/salvar")
-    fun cadastrar(@RequestBody @Valid topicoDTO: ModelTopicoDTO){
-        topicoService.cadastrar(topicoDTO)
+    @PutMapping("/editar")
+    fun atualizarTopico(@RequestBody @Valid topicoDTO: AtualizaTopicoDTO){
+        topicoService.atualizar(topicoDTO)
     }
 
-    @PutMapping("/editar")
-    fun atualizar(@RequestBody @Valid topicoDTO: AtualizaTopicoDTO){
-        topicoService.atualizar(topicoDTO)
+    @DeleteMapping("/delete/{id}")
+    fun removeTopico(@PathVariable id: Long){
+        topicoService.deletar(id)
     }
 
 }
