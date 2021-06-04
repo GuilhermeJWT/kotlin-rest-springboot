@@ -4,7 +4,9 @@ import br.com.systemsgs.forumalura.dto.AtualizaTopicoDTO
 import br.com.systemsgs.forumalura.dto.TopicoResponseDTO
 import br.com.systemsgs.forumalura.dto.ModelTopicoDTO
 import br.com.systemsgs.forumalura.service.TopicoService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
 
 @RestController
@@ -12,8 +14,11 @@ import javax.validation.Valid
 class TopicoController(private val topicoService: TopicoService) {
 
     @PostMapping("/salvar")
-    fun cadastrarTopico(@RequestBody @Valid topicoDTO: ModelTopicoDTO){
-        topicoService.cadastrar(topicoDTO)
+    fun cadastrarTopico(@RequestBody @Valid topicoDTO: ModelTopicoDTO, builder : UriComponentsBuilder): ResponseEntity<TopicoResponseDTO>{
+        val topicoCriado = topicoService.cadastrar(topicoDTO)
+        val uri = builder.path("/topicos/${topicoCriado.id}").build().toUri()
+
+        return ResponseEntity.created(uri).body(topicoCriado)
     }
 
     @GetMapping("/listar")

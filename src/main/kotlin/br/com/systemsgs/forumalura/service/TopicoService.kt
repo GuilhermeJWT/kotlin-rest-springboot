@@ -26,10 +26,11 @@ class TopicoService(
         return converterMapper.map(topico)
     }
 
-    fun cadastrar(topicoDTO: ModelTopicoDTO) {
+    fun cadastrar(topicoDTO: ModelTopicoDTO): TopicoResponseDTO {
         val topico = converterTopicoConverterMapper.map(topicoDTO)
         topico.id = topicos.size.toLong() +1
         topicos = topicos.plus(topico)
+        return converterMapper.map(topico)
     }
 
     fun atualizar(topicoDTO: AtualizaTopicoDTO) {
