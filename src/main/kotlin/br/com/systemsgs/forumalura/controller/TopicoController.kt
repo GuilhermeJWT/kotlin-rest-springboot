@@ -4,6 +4,7 @@ import br.com.systemsgs.forumalura.dto.AtualizaTopicoDTO
 import br.com.systemsgs.forumalura.dto.TopicoResponseDTO
 import br.com.systemsgs.forumalura.dto.ModelTopicoDTO
 import br.com.systemsgs.forumalura.service.TopicoService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
@@ -32,11 +33,13 @@ class TopicoController(private val topicoService: TopicoService) {
     }
 
     @PutMapping("/editar")
-    fun atualizarTopico(@RequestBody @Valid topicoDTO: AtualizaTopicoDTO){
-        topicoService.atualizar(topicoDTO)
+    fun atualizarTopico(@RequestBody @Valid topicoDTO: AtualizaTopicoDTO): ResponseEntity<TopicoResponseDTO>{
+        val topicoAtualizado = topicoService.atualizar(topicoDTO)
+        return ResponseEntity.ok(topicoAtualizado)
     }
 
     @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun removeTopico(@PathVariable id: Long){
         topicoService.deletar(id)
     }

@@ -33,19 +33,13 @@ class TopicoService(
         return converterMapper.map(topico)
     }
 
-    fun atualizar(topicoDTO: AtualizaTopicoDTO) {
+    fun atualizar(topicoDTO: AtualizaTopicoDTO): TopicoResponseDTO {
         val topico =  topicos.stream().filter({t -> t.id == topicoDTO.id}).findFirst().get()
-        topicos = topicos.minus(topico).plus(
-            ModelTopico(
-            id = topicoDTO.id,
-            titulo = topicoDTO.titulo,
-            mensagem = topicoDTO.mensagem,
-            autor = topico.autor,
-            curso = topico.curso,
-            respostas = topico.respostas,
-            status = topico.status,
-            dataCriacao = topico.dataCriacao
-        ))
+        val topicoAtualizado = ModelTopico(id = topicoDTO.id, titulo = topicoDTO.titulo, mensagem = topicoDTO.mensagem, autor = topico.autor, curso = topico.curso, respostas = topico.respostas, status = topico.status, dataCriacao = topico.dataCriacao
+        )
+        topicos = topicos.minus(topico).plus(topicoAtualizado)
+
+        return converterMapper.map(topico)
     }
 
     fun deletar(id: Long) {
