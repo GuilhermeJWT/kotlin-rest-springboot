@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    plataform: postgres
+    url: jdbc:postgresql://localhost:5432/kotlinforum
+    username: keycloak
+    password: keycloak
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
+
+#-----SUBIR OS BANCOS DE DADOS POSTGRES-----
+#docker start 9fc
+#docker exec -it 9fc psql -U keycloak --password
+#create database kotlinforum;
